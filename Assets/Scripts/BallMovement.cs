@@ -13,7 +13,6 @@ public class BallMovement : NetworkBehaviour
     {
         if (IsServer)
         {
-            // Only the server initializes the ball's movement
             InitializeBallMovementServerRpc();
         }
     }
@@ -36,7 +35,7 @@ public class BallMovement : NetworkBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!IsServer) return; // Only the server handles scoring logic
+        if (!IsServer) return; 
 
         if (collision.gameObject.CompareTag("RightWall"))
         {
