@@ -835,6 +835,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a33d18c8f1c1fc47bae66941af8fce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   chatInputField: {fileID: 0}
   chatDisplay: {fileID: 0}
 --- !u!114 &500663649
@@ -2617,7 +2618,7 @@ MonoBehaviour:
     Prefabs:
       NetworkPrefabsLists:
       - {fileID: 11400000, guid: 40471e1957e6d5943895f3d59978f557, type: 2}
-    TickRate: 30
+    TickRate: 240
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 0
     ConnectionData: 
@@ -2798,6 +2799,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a33d18c8f1c1fc47bae66941af8fce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   chatInputField: {fileID: 500663649}
   chatDisplay: {fileID: 966097978}
 --- !u!4 &2063005183

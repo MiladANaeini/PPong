@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 9015409045994083445}
   - component: {fileID: 3186435138809369313}
   - component: {fileID: 4670630322122730587}
-  - component: {fileID: 4932430808306587866}
   - component: {fileID: 3105285210753984702}
+  - component: {fileID: 4932430808306587866}
   - component: {fileID: -4166310865512109626}
   m_Layer: 0
   m_Name: ClientPaddle
@@ -137,19 +137,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.17, y: 1.2}
   m_EdgeRadius: 0
---- !u!114 &4932430808306587866
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8422975074263348258}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f897c7298c5d3c4d9a12b339f2960ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 5
 --- !u!114 &3105285210753984702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,6 +162,20 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &4932430808306587866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8422975074263348258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f897c7298c5d3c4d9a12b339f2960ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  moveSpeed: 5
 --- !u!114 &-4166310865512109626
 MonoBehaviour:
   m_ObjectHideFlags: 0
