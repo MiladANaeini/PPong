@@ -31,7 +31,7 @@ private void Start()
         states.Add(new PlayingState(this));
         states.Add(new PauseState(this));
         NetworkManager.Singleton.StartHost();
-        // Register to client connected callback
+
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
 
         if (NetworkManager.Singleton.IsServer)
@@ -89,20 +89,17 @@ private void Start()
         var hostPaddleObject = hostPaddle.GetComponent<NetworkObject>();
         if (hostPaddleObject.IsSpawned)
         {
-            Debug.Log("Host Paddle is already spawned!");
+            Debug.Log("Host already spawned!");
             hostPaddleObject.ChangeOwnership(NetworkManager.Singleton.LocalClientId);
-            Debug.Log($"Host Paddle Ownership changed to Client ID: {NetworkManager.Singleton.LocalClientId}");
         }
         else
         {
             hostPaddleObject.SpawnWithOwnership(NetworkManager.Singleton.LocalClientId);
-            Debug.Log($"Host Paddle Spawned and assigned to Client ID: {NetworkManager.Singleton.LocalClientId}");
         }
     }
 
     private void OnClientConnected(ulong clientId)
     {
-        Debug.Log($"Client connected: {clientId}");
         AssignClientPaddleOwnership(clientId);
     }
 
@@ -111,20 +108,18 @@ private void Start()
         var clientPaddleObject = clientPaddle.GetComponent<NetworkObject>();
         if (clientPaddleObject.IsSpawned)
         {
-            Debug.Log("Client Paddle is already spawned!");
+            Debug.Log("Client  already spawned!");
             clientPaddleObject.ChangeOwnership(clientId);
-            Debug.Log($"Client Paddle Ownership changed to Client ID: {clientId}");
         }
         else
         {
             clientPaddleObject.SpawnWithOwnership(clientId);
-            Debug.Log($"Client Paddle Spawned and assigned to Client ID: {clientId}");
         }
     }
 
     private void OnDestroy()
     {
-        // Unregister from the callback to avoid memory leaks
+        // avoid memory leaks
         if (NetworkManager.Singleton != null)
         {
             NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;

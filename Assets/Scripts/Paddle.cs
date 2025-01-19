@@ -7,7 +7,7 @@ public class Paddle : NetworkBehaviour
 
     private void Update()
     {
-        if (!IsOwner) return; // Only the paddle's owner can control it
+        if (!IsOwner) return; // for owner only
 
         Vector2 direction = Vector2.zero;
 
@@ -36,7 +36,7 @@ public class Paddle : NetworkBehaviour
     [ClientRpc]
     private void MovePaddleClientRpc(Vector2 direction)
     {
-        if (!IsOwner) // Only non-owners update via the ClientRpc
+        if (!IsOwner) // via the ClientRpc
         {
             MovePaddle(direction);
         }
