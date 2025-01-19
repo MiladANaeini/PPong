@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2693489612892424068}
   - component: {fileID: 2627628243180838199}
   - component: {fileID: 597393664651734197}
-  - component: {fileID: 7595311270348711205}
   - component: {fileID: 668188235312345905}
+  - component: {fileID: 7595311270348711205}
   - component: {fileID: 5025146988824224987}
   m_Layer: 0
   m_Name: HostPaddle
@@ -137,19 +137,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.17, y: 1.2}
   m_EdgeRadius: 0
---- !u!114 &7595311270348711205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1603704326488991958}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f897c7298c5d3c4d9a12b339f2960ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 5
 --- !u!114 &668188235312345905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,6 +162,20 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &7595311270348711205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1603704326488991958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f897c7298c5d3c4d9a12b339f2960ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  moveSpeed: 5
 --- !u!114 &5025146988824224987
 MonoBehaviour:
   m_ObjectHideFlags: 0
