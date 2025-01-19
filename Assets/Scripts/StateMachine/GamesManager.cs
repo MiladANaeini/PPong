@@ -6,7 +6,8 @@ using Unity.Netcode.Transports.UTP;
 public class GamesManager : StateMachine
 {
     public static GamesManager instance;
-
+    public GameObject hostPaddle;
+    public GameObject clientPaddle;
     [SerializeField] private GameObject ballPrefab; 
     private bool isInitialized = false;
 
@@ -26,18 +27,17 @@ public class GamesManager : StateMachine
 
 private void Start()
 {
-        //Debug.Log("GamesManager Start");
-
-        //// Automatically start as a host for testing purposes
-        //if (!NetworkManager.Singleton.IsListening)
-        //{
-        //    Debug.Log("Starting Host...");
-        //    NetworkManager.Singleton.StartHost();
-        //}
 
         states.Add(new PlayingState(this));
-    states.Add(new PauseState(this));
+        states.Add(new PauseState(this));
         NetworkManager.Singleton.StartHost();
+        // Register to client connected callback
+        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+
+        if (NetworkManager.Singleton.IsServer)
+        {
+            AssignHostPaddleOwnership();
+        }
 
     }
 
@@ -50,17 +50,15 @@ private void Start()
 
         UpdateStateMachine();
     }
-
     private void InitializeGame()
     {
-        Debug.Log("Initializing game...");
-        Debug.Log($"Is Server: {NetworkManager.Singleton.IsServer}, Is Host: {NetworkManager.Singleton.IsHost}");
+
 
         instance.SwitchState<PlayingState>();
 
         if (NetworkManager.Singleton.IsServer || NetworkManager.Singleton.IsHost)
         {
-            SpawnBallServerRpc(); // Only the server/host spawns the ball
+            SpawnBallServerRpc();
         }
 
         isInitialized = true;
@@ -69,28 +67,71 @@ private void Start()
     [ServerRpc(RequireOwnership = false)]
     public void SpawnBallServerRpc()
     {
-        Debug.Log("SpawnBallServerRpc called.");
 
         if (ballPrefab != null)
         {
-            Debug.Log("Instantiating ball...");
             GameObject ball = Instantiate(ballPrefab, Vector3.zero, Quaternion.identity);
 
             if (ball.GetComponent<NetworkObject>() != null)
             {
                 Debug.Log("Spawning ball on the network...");
                 ball.GetComponent<NetworkObject>().Spawn(true);
-                Debug.Log("Ball spawned successfully.");
             }
             else
             {
                 Debug.LogError("Ball prefab is missing a NetworkObject component!");
             }
         }
+    }
+
+    private void AssignHostPaddleOwnership()
+    {
+        var hostPaddleObject = hostPaddle.GetComponent<NetworkObject>();
+        if (hostPaddleObject.IsSpawned)
+        {
+            Debug.Log("Host Paddle is already spawned!");
+            hostPaddleObject.ChangeOwnership(NetworkManager.Singleton.LocalClientId);
+            Debug.Log($"Host Paddle Ownership changed to Client ID: {NetworkManager.Singleton.LocalClientId}");
+        }
         else
         {
-            Debug.LogError("Ball prefab is not assigned in the GamesManager.");
+            hostPaddleObject.SpawnWithOwnership(NetworkManager.Singleton.LocalClientId);
+            Debug.Log($"Host Paddle Spawned and assigned to Client ID: {NetworkManager.Singleton.LocalClientId}");
         }
     }
+
+    private void OnClientConnected(ulong clientId)
+    {
+        Debug.Log($"Client connected: {clientId}");
+        AssignClientPaddleOwnership(clientId);
+    }
+
+    private void AssignClientPaddleOwnership(ulong clientId)
+    {
+        var clientPaddleObject = clientPaddle.GetComponent<NetworkObject>();
+        if (clientPaddleObject.IsSpawned)
+        {
+            Debug.Log("Client Paddle is already spawned!");
+            clientPaddleObject.ChangeOwnership(clientId);
+            Debug.Log($"Client Paddle Ownership changed to Client ID: {clientId}");
+        }
+        else
+        {
+            clientPaddleObject.SpawnWithOwnership(clientId);
+            Debug.Log($"Client Paddle Spawned and assigned to Client ID: {clientId}");
+        }
+    }
+
+    private void OnDestroy()
+    {
+        // Unregister from the callback to avoid memory leaks
+        if (NetworkManager.Singleton != null)
+        {
+            NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
+        }
+    }
+
+
+
 
 }
