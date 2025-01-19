@@ -38,12 +38,12 @@ public class BallMovement : NetworkBehaviour
 
         if (collision.gameObject.CompareTag("RightWall"))
         {
-            orangeScore.Value += 1; 
+            blueScore.Value += 1;
             ResetBallServerRpc();  
         }
         else if (collision.gameObject.CompareTag("LeftWall"))
         {
-            blueScore.Value += 1;  
+            orangeScore.Value += 1;
             ResetBallServerRpc();  
         }
     }
