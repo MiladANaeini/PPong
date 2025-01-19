@@ -30,7 +30,7 @@ public class BallMovement : NetworkBehaviour
 
     void Start()
     {
-        canvasManager = FindObjectOfType<CanvasManager>();
+        canvasManager = FindAnyObjectByType<CanvasManager>();
     }
 
     void OnCollisionEnter2D(Collision2D collision)

@@ -7,12 +7,11 @@ public class GamesManager : StateMachine
 {
     public static GamesManager instance;
 
-    [SerializeField] private GameObject ballPrefab; // Assign this in the Inspector
+    [SerializeField] private GameObject ballPrefab; 
     private bool isInitialized = false;
 
     private void Awake()
     {
-        Debug.Log(NetworkManager.Singleton != null ? "NetworkManager is initialized." : "NetworkManager is null.");
 
         if (instance == null)
         {
@@ -27,19 +26,20 @@ public class GamesManager : StateMachine
 
 private void Start()
 {
-        Debug.Log("GamesManager Start");
+        //Debug.Log("GamesManager Start");
 
-        // Automatically start as a host for testing purposes
-        if (!NetworkManager.Singleton.IsListening)
-        {
-            Debug.Log("Starting Host...");
-            NetworkManager.Singleton.StartHost();
-        }
+        //// Automatically start as a host for testing purposes
+        //if (!NetworkManager.Singleton.IsListening)
+        //{
+        //    Debug.Log("Starting Host...");
+        //    NetworkManager.Singleton.StartHost();
+        //}
 
         states.Add(new PlayingState(this));
     states.Add(new PauseState(this));
+        NetworkManager.Singleton.StartHost();
 
-}
+    }
 
     void Update()
     {
