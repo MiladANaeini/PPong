@@ -30,9 +30,9 @@ private void Start()
 
         states.Add(new PlayingState(this));
         states.Add(new PauseState(this));
-        NetworkManager.Singleton.StartHost();
 
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+        NetworkManager.Singleton.OnServerStarted += OnServerStarted;
 
         if (NetworkManager.Singleton.IsServer)
         {
@@ -40,20 +40,22 @@ private void Start()
         }
 
     }
-
-    void Update()
+    private void OnServerStarted()
     {
         if (!isInitialized)
         {
             InitializeGame();
         }
+    }
+    void Update()
+    {
 
         UpdateStateMachine();
     }
-    private void InitializeGame()
+    public void InitializeGame()
     {
 
-
+        if (isInitialized) return;
         instance.SwitchState<PlayingState>();
 
         if (NetworkManager.Singleton.IsServer || NetworkManager.Singleton.IsHost)
@@ -122,6 +124,7 @@ private void Start()
         if (NetworkManager.Singleton != null)
         {
             NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
+            NetworkManager.Singleton.OnServerStarted -= OnServerStarted;
         }
     }
 
