@@ -74,12 +74,11 @@ private void Start()
 
             if (ball.GetComponent<NetworkObject>() != null)
             {
-                Debug.Log("Spawning ball on the network...");
                 ball.GetComponent<NetworkObject>().Spawn(true);
             }
             else
             {
-                Debug.LogError("Ball prefab is missing a NetworkObject component!");
+                Debug.LogError("No Ball prefab");
             }
         }
     }
